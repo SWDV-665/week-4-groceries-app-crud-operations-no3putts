@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { GroceryService } from '../service/grocery.service';
 
 @Component({
   selector: 'app-tab1',
@@ -12,44 +13,13 @@ export class Tab1Page {
 
   title = "Groceries";
 
-  items = [
-    {
-      name: "Spam",
-      qty: 2,
-      unit: "Cases",
-      imgUrl: "assets/img/spam.png"
-    },
-    {
-      name: "Sardines",
-      qty: 12,
-      unit: "Cans",
-      imgUrl: "assets/img/sardines.png"
+  
 
-    },
-    {
-      name: "Fish Sauce",
-      qty: 2,
-      unit: "Bottles",
-      imgUrl: "assets/img/patis.png"
-    },
-    {
-      name: "Salted Eggs",
-      qty: 1,
-      unit: "Dozen",
-      imgUrl: "assets/img/itlog.png"
-    },
-    {
-      name: "Pork Skin",
-      qty: 3,
-      unit: "Bags",
-      imgUrl: "assets/img/chicharon.png"
-    },
+  constructor(public toastController: ToastController, public alertController: AlertController, public dataService: GroceryService) { }
 
-  ];
-
-  constructor(public toastController: ToastController, public alertController: AlertController) { }
-
-
+  loadItems(){
+    return this.dataService.getItems();
+  }
   async editItem(item, index) {
     const toast = await this.toastController.create({
       message: 'Editing Item: ' + item.name,
@@ -72,7 +42,7 @@ export class Tab1Page {
       color: 'success',
     });
     toast.present();  // displays toast 
-    this.items.splice(index, 1); // remove item from array
+    this.dataService.removeItem(index)
   }
 
   async addItemPopup() {
@@ -112,7 +82,7 @@ export class Tab1Page {
             if (item.name != '')
               if (item.imgUrl == '')
                 item.imgUrl = 'assets/img/grocery.png'
-            this.items.push(item);
+            this.dataService.addItem(item);
           }
         }
       ]
@@ -161,7 +131,7 @@ export class Tab1Page {
             if (item.name != '')
               if (item.imgUrl == '')
                 item.imgUrl = 'assets/img/grocery.png'
-            this.items[index] = item;
+            this.dataService.editItem(item, index);
           }
         }
       ]

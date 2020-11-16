@@ -49,7 +49,8 @@ export class InputDialogService {
             if (item.name != '')
               if (item.imgUrl == '')
                 item.imgUrl = 'assets/img/grocery.png'
-            if(item == undefined){
+           
+            if(index == undefined){
               console.log("ADDING: " + item);
               this.dataService.addItem(item);
             }

@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { GroceryService } from '../service/grocery.service';
+import { InputDialogService } from '../service/input-dialog.service';
 
 @Component({
   selector: 'app-tab1',
@@ -15,7 +16,7 @@ export class Tab1Page {
 
   
 
-  constructor(public toastController: ToastController, public alertController: AlertController, public dataService: GroceryService) { }
+  constructor(public toastController: ToastController, public alertController: AlertController, public dataService: GroceryService, public inputDialog: InputDialogService) { }
 
   loadItems(){
     return this.dataService.getItems();
@@ -29,7 +30,7 @@ export class Tab1Page {
       color: 'warning',
     });
     toast.present();  // displays toast 
-    this.editItemPopup(item, index);
+    this.inputDialog.saveItem(item, index);
   }
 
   async removeItem(item, index) {
@@ -45,99 +46,8 @@ export class Tab1Page {
     this.dataService.removeItem(index)
   }
 
-  async addItemPopup() {
-    const alert = await this.alertController.create({
-      header: 'Add Grocery Item',
-      // subHeader: 'Subtitle',
-      message: 'Enter item, quantity, unit and imgUrl (if any, blank for default)',
-      inputs: [
-        {
-          name: 'name',
-          placeholder: 'Item'
-        },
-        {
-          name: 'qty',
-          placeholder: 'Quantity'
-        },
-        {
-          name: 'unit',
-          placeholder: 'Unit'
-        },
-        {
-          name: 'imgUrl',
-          placeholder: 'Image Url'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Cancel item entry');
-          }
-        }, {
-          text: 'Add',
-          handler: (item) => {
-            if (item.name != '')
-              if (item.imgUrl == '')
-                item.imgUrl = 'assets/img/grocery.png'
-            this.dataService.addItem(item);
-          }
-        }
-      ]
-    });
-
-    await alert.present(); // Present Alert
-  }
-  async editItemPopup(item, index) {
-    const alert = await this.alertController.create({
-      header: 'Edit Grocery Item',
-      // subHeader: 'Subtitle',
-      message: 'Enter updated values',
-      inputs: [
-        {
-          name: 'name',
-          placeholder: 'Item',
-          value: item.name
-        },
-        {
-          name: 'qty',
-          placeholder: 'Quantity',
-          value: item.qty
-        },
-        {
-          name: 'unit',
-          placeholder: 'Unit',
-          value: item.unit
-        },
-        {
-          name: 'imgUrl',
-          placeholder: 'Image Url',
-          value: item.imgUrl
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Cancel item entry');
-          }
-        }, {
-          text: 'Save',
-          handler: (item) => {
-            if (item.name != '')
-              if (item.imgUrl == '')
-                item.imgUrl = 'assets/img/grocery.png'
-            this.dataService.editItem(item, index);
-          }
-        }
-      ]
-    });
-
-    await alert.present(); // Present Alert
+  addItem(){
+    this.inputDialog.saveItem();
   }
 
 }

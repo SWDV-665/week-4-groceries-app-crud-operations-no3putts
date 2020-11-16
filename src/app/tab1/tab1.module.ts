@@ -7,6 +7,7 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { GroceryService } from '../service/grocery.service';
+import { InputDialogService } from '../service/input-dialog.service';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { GroceryService } from '../service/grocery.service';
     Tab1PageRoutingModule
   ],
   declarations: [Tab1Page],
-  providers: [GroceryService]
+  providers: [GroceryService,InputDialogService]
 })
 export class Tab1PageModule {}

@@ -8,6 +8,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { GroceryService } from './service/grocery.service';
+import { InputDialogService } from './service/input-dialog.service';
 
 @NgModule({
   declarations: [AppComponent],

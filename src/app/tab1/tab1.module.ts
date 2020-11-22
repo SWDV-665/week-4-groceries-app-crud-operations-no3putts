@@ -8,6 +8,7 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { GroceryService } from '../service/grocery.service';
 import { InputDialogService } from '../service/input-dialog.service';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { InputDialogService } from '../service/input-dialog.service';
     Tab1PageRoutingModule
   ],
   declarations: [Tab1Page],
-  providers: [GroceryService,InputDialogService]
+  providers: [GroceryService,InputDialogService,SocialSharing]
 })
 export class Tab1PageModule {}
